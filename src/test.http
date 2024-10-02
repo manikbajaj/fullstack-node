@@ -1,16 +1,25 @@
 
-// This will throw error because route param is mandatory
-GET http://localhost:3001/users/
+GET http://localhost:3001/some.text/
+
+GET http://localhost:3001/post/
+
+GET http://localhost:3001/posts/
+
+GET http://localhost:3001/tag/
+
+GET http://localhost:3001/tags/
+
+GET http://localhost:3001/tagsssssssssssss/
+
+GET http://localhost:3001/error/404
+
+GET http://localhost:3001/error/404
+
+GET http://localhost:3001/drangonfly
+
+GET http://localhost:3001/fly
+
+GET http://localhost:3001/flybird
 
 
-// This will go through
-//  Queries are key value pairs and not a part of URL definition they need to be documented for developers so that they can use it when needed. All queries are optional in nature, queries are never mandatory
-GET http://localhost:3001/users/admin/?order=ascending
 
-// This is valid because the route param is not 
-//  Query params can be combined as well using & and can be use without optional route params
-GET http://localhost:3001/tasks/?status=completed&order=ascending
-
-
-// This is valid because the route param is not 
-GET http://localhost:3001/tasks/john/
