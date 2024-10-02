@@ -1,9 +1,16 @@
-GET http://localhost:3001/
 
-POST http://localhost:3001/
+// This will throw error because route param is mandatory
+GET http://localhost:3001/users/
 
-PATCH http://localhost:3001/
 
-PUT http://localhost:3001/
+// This will go through
+//  Queries are key value pairs and not a part of URL definition they need to be documented for developers so that they can use it when needed. All queries are optional in nature, queries are never mandatory
+GET http://localhost:3001/users/admin/?order=ascending
 
-DELETE http://localhost:3001/
+// This is valid because the route param is not 
+//  Query params can be combined as well using & and can be use without optional route params
+GET http://localhost:3001/tasks/?status=completed&order=ascending
+
+
+// This is valid because the route param is not 
+GET http://localhost:3001/tasks/john/
