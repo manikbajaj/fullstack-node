@@ -4,17 +4,8 @@ import express from "express";
 const app = express();
 const port = 3001;
 
-//  Creating a middleware
-const myMiddleware = function (req, res, next) {
-  // On request
-  req.info = { appname: "Tasks Manager", author: "Cloudaffle" };
-
-  // Do not return from the middleware
-  next();
-};
-
-//  Using the middleware
-app.use(myMiddleware);
+//  Parsing request body
+app.use(express.json());
 
 //  Defining Routes
 app.use("/", TasksRouter);
