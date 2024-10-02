@@ -1,18 +1,21 @@
-// Importing a custom module 'module.js'
-// Make sure the file 'module.js' is in the same directory as this file
-const operations = require("./module");
+// Import specific functions from date-fns
+const { format, addDays, subDays } = require("date-fns");
 
-// index.js
-// Run this file using the Node.js CLI with `node index.js`
+// Current date
+const now = new Date();
+console.log("Today is:", format(now, "yyyy-MM-dd"));
 
-// Basic function to print messages
-function printMessage(message) {
-  console.log(message);
-}
+// Adding days to the current date
+const nextWeek = addDays(now, 7);
+console.log("Next week will be:", format(nextWeek, "yyyy-MM-dd"));
 
-// Calling the printMessage function to display a greeting
-printMessage("Hello, World!");
+// Subtracting days from the current date
+const lastWeek = subDays(now, 7);
+console.log("Last week was:", format(lastWeek, "yyyy-MM-dd"));
 
-// Using imported function
-console.log("Sum of 3 and 5 is:", operations.add(3, 5));
-console.log("Product of 4 and 6 is:", operations.multiply(4, 6));
+/*
+This script demonstrates basic date manipulations using the date-fns library:
+- `format` to format dates in a readable format.
+- `addDays` and `subDays` to calculate dates in the future and past.
+Run this script in Node.js using `node index.js`.
+*/
