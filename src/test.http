@@ -1,1 +1,1 @@
-GET http://localhost:3001/
+GET http://localhost:3001/admin/?order=ascending
