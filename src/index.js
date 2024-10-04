@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const responseFormatter = require("./middleware/responseFormatter.js");
 const tasksRouter = require("./tasks/tasks.router.js");
+const { StatusCodes } = require("http-status-codes");
 
 const app = express();
 const port = 3001;
@@ -32,6 +33,12 @@ app.use(responseFormatter);
 
 //  Defining Routes
 app.use("/", tasksRouter);
+
+// send back a 404 error for any unknown api request
+// Sequence is important
+app.use((req, res) => {
+  res.status(StatusCodes.NOT_FOUND).json(null);
+});
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
