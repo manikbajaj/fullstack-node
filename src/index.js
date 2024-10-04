@@ -6,6 +6,7 @@ const cors = require("cors");
 const responseFormatter = require("./middleware/responseFormatter.js");
 const tasksRouter = require("./tasks/tasks.router.js");
 const authRouter = require("./auth/auth.router.js");
+const userRouter = require("./user/user.router.js");
 const { StatusCodes } = require("http-status-codes");
 
 const app = express();
@@ -35,6 +36,7 @@ app.use(responseFormatter);
 //  Defining Routes
 app.use("/", tasksRouter);
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
 
 // send back a 404 error for any unknown api request
 // Sequence is important
