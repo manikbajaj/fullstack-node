@@ -1,21 +1,20 @@
 const express = require("express");
+const tasksController = require("./tasks.controller.js");
 
 /*Fire the router function*/
 const tasksRouter = express.Router();
 
 // Get All Tasks
-tasksRouter.get("/tasks", (req, res) => {
-  return res.send("Hello World");
-});
+tasksRouter.get("/tasks", tasksController.handleGetTasks);
 
 // POST Create a task
-tasksRouter.post("/tasks", (req, res) => {
-  // Body will be undefined without middleware
-  console.log(req.body);
-  // You get a JavaScript object
-  console.log(typeof req.body);
-  res.send("Create a new task");
-});
+tasksRouter.post("/tasks", tasksController.handlePostTasks);
+
+// Get All Tasks
+tasksRouter.patch("/tasks", tasksController.handlePatchTasks);
+
+// POST Create a task
+tasksRouter.delete("/tasks", tasksController.handleDeleteTasks);
 
 // export the task router
 module.exports = tasksRouter;
