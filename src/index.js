@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const morgan = require("morgan");
+const cors = require("cors");
 const tasksRouter = require("./tasks/tasks.router.js");
 
 const app = express();
@@ -9,6 +10,19 @@ const port = 3001;
 
 //  Parsing request body
 app.use(express.json());
+
+// CORS options, here allowing all origins for demonstration purposes
+// For production, you should specify allowed origins to tighten security
+const corsOptions = {
+  origin: "https://app.example.com", // Set specific origin or use '*' to allow all
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+// Use CORS
+// Enabled for all origins
+app.use(cors());
+// Only requests from example.com
+// app.use(cors(corsOptions));
 
 // Using Morgan for logging
 /**
