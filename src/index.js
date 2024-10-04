@@ -1,11 +1,11 @@
-import { TasksRouter } from "./tasks/tasks.router.js";
-import express from "express";
+const express = require("express");
+const tasksRouter = require("./tasks/tasks.router.js");
 
 const app = express();
 const port = 3001;
 
 //  Defining Routes
-app.use("/", TasksRouter);
+app.use("/", tasksRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

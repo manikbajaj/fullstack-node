@@ -1,10 +1,13 @@
-import { Router } from "express";
+const express = require("express");
 
 /*Fire the router function*/
-export const TasksRouter = Router();
+const tasksRouter = express.Router();
 
 // Get All Tasks
-TasksRouter.get("/tasks", (req, res) => res.send("All Tasks"));
+tasksRouter.get("/tasks", (req, res) => res.send("All Tasks"));
 
 // POST Create a task
-TasksRouter.post("/tasks", (req, res) => res.send("Create a new task"));
+tasksRouter.post("/tasks", (req, res) => res.send("Create a new task"));
+
+// export the task router
+module.exports = tasksRouter;
