@@ -1,4 +1,5 @@
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
+const Task = require("./task.schema.js");
 
 function handleGetTasks(req, res) {
   let response = [
@@ -24,8 +25,20 @@ function handleGetTasks(req, res) {
   res.status(StatusCodes.OK).json(response);
 }
 
-function handlePostTasks(req, res) {
-  res.send("POST tasks controller");
+// Convert the function to Async function
+async function handlePostTasks(req, res) {
+  const task = new Task({
+    title: req.body.title,
+    description: req.body.description,
+    status: req.body.status,
+    priority: req.body.priority,
+    dueDate: req.body.dueDate,
+  });
+
+  // Insert the article in  MongoDB database
+  await task.save();
+
+  res.json(task);
 }
 
 function handlePatchTasks(req, res) {
