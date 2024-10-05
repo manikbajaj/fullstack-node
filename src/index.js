@@ -8,6 +8,7 @@ const tasksRouter = require("./tasks/tasks.router.js");
 const authRouter = require("./auth/auth.router.js");
 const userRouter = require("./user/user.router.js");
 const { StatusCodes } = require("http-status-codes");
+const mongoose = require("mongoose");
 
 const app = express();
 const port = 3001;
@@ -44,6 +45,21 @@ app.use((req, res) => {
   res.status(StatusCodes.NOT_FOUND).json(null);
 });
 
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
+async function bootstrap() {
+  try {
+    await mongoose.connect(
+      "mongodb+srv://nestjs:4kRbli2h2k5F50tb@nodejs.7jkye.mongodb.net/",
+      { dbName: "nodejsDatabase" }
+    );
+    console.log("Connnected To MongoDB");
+    app.listen(port, () => {
+      console.log(`App listening on port ${port}`);
+    });
+  } catch (error) {
+    console.error(error);
+    /** An exit code of 1 typically indicates that there was an error or abnormal termination of the program, which is often used to signal failure in scenarios where the program encounters critical issues that prevent normal operation. */
+    process.exit(1);
+  }
+}
+
+bootstrap();
