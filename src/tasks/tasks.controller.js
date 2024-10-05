@@ -38,7 +38,7 @@ async function handlePostTasks(req, res) {
   // Insert the article in  MongoDB database
   await task.save();
 
-  res.json(task);
+  res.status(StatusCodes.CREATED).json(task);
 }
 
 function handlePatchTasks(req, res) {
