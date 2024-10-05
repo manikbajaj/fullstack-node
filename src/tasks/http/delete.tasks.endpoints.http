@@ -1,1 +1,6 @@
 DELETE http://localhost:3001/tasks
+Content-Type: application/json
+
+{
+  "_id":"6701256acd18e2ba28d3348c"
+}
