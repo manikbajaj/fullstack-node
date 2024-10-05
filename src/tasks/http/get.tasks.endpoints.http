@@ -1,1 +1,1 @@
-GET http://localhost:3001/taskss?query=true
+GET http://localhost:3001/tasks

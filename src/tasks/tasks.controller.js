@@ -1,28 +1,10 @@
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const createTaskProvider = require("./providers/createTask.provider.js");
+const getTasksProvider = require("./providers/getTasks.provider.js");
 
-function handleGetTasks(req, res) {
-  let response = [
-    {
-      title: "Title Of the Task",
-      date: "2025-01-01T12:00:00Z",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis diam vel malesuada ultricies.",
-      priority: "normal",
-      status: "todo",
-    },
-    {
-      title: "Title Of the Task 2",
-      date: "2025-01-01T12:00:00Z",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis diam vel malesuada ultricies.",
-      priority: "normal",
-      status: "inProgress",
-    },
-  ];
-
-  //! Status should be before response
-  res.status(StatusCodes.OK).json(response);
+async function handleGetTasks(req, res) {
+  const tasks = await getTasksProvider(req, res);
+  res.status(StatusCodes.OK).json(tasks);
 }
 
 // Convert the function to Async function
