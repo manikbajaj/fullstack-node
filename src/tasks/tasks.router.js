@@ -1,7 +1,8 @@
 const express = require("express");
 const tasksController = require("./tasks.controller.js");
 const { StatusCodes } = require("http-status-codes");
-const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
+const createTaskValidator = require("./validators/createTask.validator.js");
 
 /*Fire the router function*/
 const tasksRouter = express.Router();
@@ -10,27 +11,14 @@ const tasksRouter = express.Router();
 tasksRouter.get("/tasks", tasksController.handleGetTasks);
 
 // POST Create a task
-tasksRouter.post(
-  "/tasks",
-  [
-    body("title", "The title cannot be blank").notEmpty(),
-    body("title", "The title must be a string value").isString(),
-    body("dueDate", "dueDate need to be valid ISO8601 date string")
-      .notEmpty()
-      .isISO8601(),
-  ],
-  (req, res) => {
-    const result = validationResult(req);
-    //! See what happens when validation fails
-    console.log(result);
-    //! Add a condition to stop request if there are errors
-    if (result.isEmpty()) {
-      return tasksController.handlePostTasks(req, res);
-    } else {
-      res.status(StatusCodes.BAD_REQUEST).json(result.array());
-    }
+tasksRouter.post("/tasks", createTaskValidator, (req, res) => {
+  const result = validationResult(req);
+  if (result.isEmpty()) {
+    return tasksController.handlePostTasks(req, res);
+  } else {
+    res.status(StatusCodes.BAD_REQUEST).json(result.array());
   }
-);
+});
 
 // Get All Tasks
 tasksRouter.patch("/tasks", tasksController.handlePatchTasks);
