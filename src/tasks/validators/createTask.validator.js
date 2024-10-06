@@ -10,26 +10,30 @@ createTaskValidator = [
   // Sanitizers
   body("title", "The title must be a string value").trim(),
   // ! See problem with chaining the message should be generic, dueDate message needs to be "dueDate is required and valid ISO8601 string"
-  body("dueDate", "dueDate need to be valid ISO8601 date string")
+  body("dueDate", "dueDate needs to be valid ISO8601 date string")
     .notEmpty()
     .isISO8601(),
-  body("description", "The description must be a string value")
+  body(
+    "description",
+    "The description cannot be empty and must be a string value"
+  )
     .notEmpty()
     .isString()
     .trim(),
   body(
+    "description",
+    "The description cannot be more than 500 characters."
+  ).isLength({
+    max: 500,
+  }),
+  body(
     "status",
     "The status must be one of ['todo', 'inProgress', 'completed']"
-  )
-    .isIn(["todo", "inProgress", "completed"])
-    .notEmpty()
-    .isString()
-    .default("todo"), // assiging a defualt sanitizer
-  body("priority", "The priority must be one of ['low', 'normal', 'high']")
-    .isIn(["low", "normal", "high"])
-    .notEmpty()
-    .isString()
-    .default("normal"),
+  ).isIn(["todo", "inProgress", "completed"]),
+  body(
+    "priority",
+    "The priority must be one of ['low', 'normal', 'high']"
+  ).isIn(["low", "normal", "high"]),
 ];
 
 module.exports = createTaskValidator;
