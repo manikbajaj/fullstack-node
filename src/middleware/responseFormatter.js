@@ -14,7 +14,8 @@ function responseFormatter(req, res, next) {
       status: statusCode >= 200 && statusCode < 300 ? "success" : "error",
       statusCode: statusCode,
       message: getReasonPhrase(res.statusCode),
-      data: data,
+      data: statusCode >= 200 && statusCode < 300 ? data : null,
+      error: statusCode >= 200 && statusCode < 300 ? null : data,
     };
 
     // Call the original res.json function with the new response structure
