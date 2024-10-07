@@ -1,6 +1,7 @@
 const { body } = require("express-validator");
 
 updateTaskValidator = [
+  body("_id", "Valid document Id not optional").notEmpty().isMongoId(),
   body("title", "The title must be a string value").isString().optional(),
   body("title", "The title must be at most 100 characters long").isLength({
     max: 100,

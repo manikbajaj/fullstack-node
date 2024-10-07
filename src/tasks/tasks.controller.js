@@ -1,4 +1,3 @@
-const { StatusCodes } = require("http-status-codes");
 const createTaskProvider = require("./providers/createTask.provider.js");
 const getTasksProvider = require("./providers/getTasks.provider.js");
 const updateTaskProvider = require("./providers/updateTask.provider.js");
@@ -17,8 +16,7 @@ async function handlePatchTasks(req, res) {
 }
 
 async function handleDeleteTasks(req, res) {
-  const deleteTask = await deleteTaskProvider(req, res);
-  res.status(StatusCodes.OK).json(deleteTask);
+  return await deleteTaskProvider(req, res);
 }
 
 module.exports = {

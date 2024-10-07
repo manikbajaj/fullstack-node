@@ -5,6 +5,7 @@ const { validationResult } = require("express-validator");
 const createTaskValidator = require("./validators/createTask.validator.js");
 const getTasksValidator = require("./validators/getTasks.validator.js");
 const updateTaskValidator = require("./validators/updateTask.validator.js");
+const deleteTaskValidator = require("./validators/deleteTask.validator.js");
 /*Fire the router function*/
 const tasksRouter = express.Router();
 
@@ -39,7 +40,14 @@ tasksRouter.patch("/tasks", updateTaskValidator, (req, res) => {
 });
 
 // POST Create a task
-tasksRouter.delete("/tasks", tasksController.handleDeleteTasks);
+tasksRouter.delete("/tasks", deleteTaskValidator, (req, res) => {
+  const result = validationResult(req);
+  if (result.isEmpty()) {
+    return tasksController.handleDeleteTasks(req, res);
+  } else {
+    res.status(StatusCodes.BAD_REQUEST).json(result.array());
+  }
+});
 
 // export the task router
 module.exports = tasksRouter;
