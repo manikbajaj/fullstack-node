@@ -2,10 +2,6 @@ PATCH http://localhost:3001/tasks
 Content-Type: application/json
 
 {
-  "_id":"6701256acd18e2ba28d3348c",
-  "title": "Adding a new title",
-  "dueDate": "2025-01-01T12:00:00Z",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis diam vel malesuada ultricies.",
-  "priority": "normal",
-  "status": "todo"
+  "_id":"67012c647e532728101aaee0",
+  "title": "Adding a new title"
 }

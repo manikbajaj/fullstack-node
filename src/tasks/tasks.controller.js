@@ -8,14 +8,12 @@ async function handleGetTasks(req, res) {
   return await getTasksProvider(req, res);
 }
 
-// Convert the function to Async function
 async function handlePostTasks(req, res) {
   return await createTaskProvider(req, res);
 }
 
 async function handlePatchTasks(req, res) {
-  const updatedTask = await updateTaskProvider(req, res);
-  res.status(StatusCodes.OK).json(updatedTask);
+  return await updateTaskProvider(req, res);
 }
 
 async function handleDeleteTasks(req, res) {
