@@ -11,16 +11,19 @@ async function createTaskProvider(req, res) {
     await task.save();
     return res.status(StatusCodes.CREATED).json(task);
   } catch (error) {
+    console.log(error.code);
+    console.log(req.body);
     logger.error(`Error while creating task: ${error.message}`, {
       // Manually log the error
       metadata: {
         // You can add additional metadata if necessary
         //  These are logged to the error.log
-        statusCode: StatusCodes.GATEWAY_TIMEOUT,
+        statusCode: error.code,
+        errorName: error.name,
         method: req.method,
         url: req.originalUrl,
-        body: validatedData,
-        completeError: error,
+        body: req.body,
+        error: error,
       },
     });
     return res.status(StatusCodes.GATEWAY_TIMEOUT).json({
