@@ -9,6 +9,7 @@ const authRouter = require("./auth/auth.router.js");
 const userRouter = require("./user/user.router.js");
 const { StatusCodes } = require("http-status-codes");
 const mongoose = require("mongoose");
+const expressWinstonLogger = require("./middleware/expressWinston.middleware.js");
 
 const app = express();
 const port = 3001;
@@ -30,6 +31,9 @@ var accessLogStream = fs.createWriteStream(
 
 // Using Morgan for logging
 app.use(morgan("combined", { stream: accessLogStream }));
+
+// Use Winston Logger
+app.use(expressWinstonLogger);
 
 // Format Response
 app.use(responseFormatter);
