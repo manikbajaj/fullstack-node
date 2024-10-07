@@ -1,6 +1,7 @@
 const Task = require("../task.schema.js");
 const { matchedData } = require("express-validator");
 const { StatusCodes } = require("http-status-codes");
+const logger = require("../../helpers/winston.helper.js");
 
 async function createTaskProvider(req, res) {
   const validatedData = matchedData(req);
@@ -10,9 +11,18 @@ async function createTaskProvider(req, res) {
     await task.save();
     return res.status(StatusCodes.CREATED).json(task);
   } catch (error) {
-    //! The error object might contain debugging information and you might want to add this to server logs but not required to be shared with the end user of the application.
-    //! Opportunity to create a log of errors
-    console.log(error);
+    logger.error(`Error while creating task: ${error.message}`, {
+      // Manually log the error
+      metadata: {
+        // You can add additional metadata if necessary
+        //  These are logged to the error.log
+        statusCode: StatusCodes.GATEWAY_TIMEOUT,
+        method: req.method,
+        url: req.originalUrl,
+        body: validatedData,
+        completeError: error,
+      },
+    });
     return res.status(StatusCodes.GATEWAY_TIMEOUT).json({
       reason: "Unable to process your request at the moment, please try later.",
     });
