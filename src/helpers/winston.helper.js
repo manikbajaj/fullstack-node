@@ -12,6 +12,7 @@ const path = require("path");
 // Configure Winston logger
 const logger = winston.createLogger({
   //   winston.format.combine(): This function combines multiple formatting methods into a single formatter. Each formatter inside combine is applied in the order they are provided.
+  // ! These are global format options that are applied to all logs
 
   format: winston.format.combine(
     // Adds a timestamp to each log message. You can customize the timestamp format by passing options like { format: 'YYYY-MM-DD HH:mm:ss' }.
@@ -26,6 +27,8 @@ const logger = winston.createLogger({
 
   transports: [
     // Console transport with colorization
+    // ! format options here are cusotisations to local transports
+    // ! Common properties will override the global format settings new ones will be addon
     new winston.transports.Console({
       level: "info",
       format: winston.format.combine(
@@ -35,13 +38,13 @@ const logger = winston.createLogger({
     }),
     // File transport for info level logs
     new winston.transports.File({
-      filename: path.join(__dirname, "..", "info.log"),
+      filename: path.join(__dirname, "../..", "info.log"),
       level: "info", // This will log everything from 'info' and above
       format: winston.format.json(),
     }),
     // File transport for error level logs
     new winston.transports.File({
-      filename: path.join(__dirname, "..", "error.log"),
+      filename: path.join(__dirname, "../..", "error.log"),
       level: "error", // This will log only 'error' level messages
       format: winston.format.json(),
     }),
