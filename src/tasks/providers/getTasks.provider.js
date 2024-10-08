@@ -5,7 +5,7 @@ const errorLogger = require("../../helpers/errorLogger.helper.js");
 
 async function getTasksProvider(req, res) {
   const data = matchedData(req);
-
+  console.log("Checking data", data);
   try {
     // Pagination required properties
     // Count of all documents
