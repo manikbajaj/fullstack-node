@@ -21,11 +21,8 @@ const envFile = `.env.${process.env.NODE_ENV}`;
 // configure dotenv earlier in application
 dotenv.config({ path: envFile });
 
-// !Test FIRST SEE CONFIG WITHOUT PATH
-console.log(process.env.TEST_VARIABLE);
-
 const app = express();
-const port = 3001;
+const port = process.env.PORT;
 
 //  Parsing request body
 app.use(express.json());
@@ -64,10 +61,9 @@ app.use((req, res) => {
 
 async function bootstrap() {
   try {
-    await mongoose.connect(
-      "mongodb+srv://nestjs:4kRbli2h2k5F50tb@nodejs.7jkye.mongodb.net/",
-      { dbName: "nodejsDatabase" }
-    );
+    await mongoose.connect(process.env.DATABASE_URL, {
+      dbName: process.env.DATABASE_NAME,
+    });
     console.log("Connnected To MongoDB");
     app.listen(port, () => {
       console.log(`App listening on port ${port}`);
