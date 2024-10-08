@@ -216,3 +216,6 @@ $RECYCLE.BIN/
 
 
 package-lock.json
+
+# Ignoring all env files
+.env*

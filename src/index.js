@@ -7,14 +7,25 @@ const responseFormatter = require("./middleware/responseFormatter.js");
 const tasksRouter = require("./tasks/tasks.router.js");
 const authRouter = require("./auth/auth.router.js");
 const userRouter = require("./user/user.router.js");
+const dotenv = require("dotenv");
 const { StatusCodes } = require("http-status-codes");
 const mongoose = require("mongoose");
 const expressWinstonLogger = require("./middleware/expressWinston.middleware.js");
 
+// Set the defaul environment
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
+
+// Load Environment variables from different files based on environment
+const envFile = `.env.${process.env.NODE_ENV}`;
+
+// configure dotenv earlier in application
+dotenv.config({ path: envFile });
+
+// !Test FIRST SEE CONFIG WITHOUT PATH
+console.log(process.env.TEST_VARIABLE);
+
 const app = express();
 const port = 3001;
-
-console.log(process.env.NODE_ENV);
 
 //  Parsing request body
 app.use(express.json());
