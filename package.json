@@ -5,7 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js"
+    "dev": "cross-env NODE_ENV=development nodemon src/index.js",
+    "start": "cross-env NODE_ENV=production nodemon src/index.js",
+    "staging": "cross-env NODE_ENV=staging nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "winston": "^3.15.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^3.1.7"
   }
 }

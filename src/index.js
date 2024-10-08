@@ -14,6 +14,8 @@ const expressWinstonLogger = require("./middleware/expressWinston.middleware.js"
 const app = express();
 const port = 3001;
 
+console.log(process.env.NODE_ENV);
+
 //  Parsing request body
 app.use(express.json());
 
