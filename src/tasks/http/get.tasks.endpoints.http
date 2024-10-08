@@ -1,1 +1,1 @@
-GET http://localhost:3001/tasks?limit=10&skip=0&order=asc
+GET http://localhost:3001/tasks?limit=10&page=0&order=asc

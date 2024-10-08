@@ -6,8 +6,15 @@ const errorLogger = require("../../helpers/errorLogger.helper.js");
 async function getTasksProvider(req, res) {
   const data = matchedData(req);
 
-  console.log(data);
-  const tasks = await Task.find();
+  // Pagination required properties
+  // Count of all documents
+  const totalTasks = await Task.countDocuments();
+  // Base URL
+  const baseUrl = `${req.protocol}://${req.get("host")}${
+    req.originalUrl.split("?")[0]
+  }`;
+
+  const tasks = await Task.find().limit().skip();
   try {
     // Insert the article in  MongoDB database
     const tasks = await Task.find();
