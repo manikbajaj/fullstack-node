@@ -5,7 +5,9 @@ const errorLogger = require("../../helpers/errorLogger.helper.js");
 
 async function getTasksProvider(req, res) {
   const data = matchedData(req);
-  console.log("Checking data", data);
+
+  console.log(data.order === "asc" ? 1 : -1);
+
   try {
     // Pagination required properties
     // Count of all documents
@@ -31,7 +33,10 @@ async function getTasksProvider(req, res) {
     // Fetch Data
     const tasks = await Task.find()
       .limit(limit)
-      .skip(currentPage - 1);
+      .skip(currentPage - 1)
+      .sort({
+        createdAt: data.order === "asc" ? 1 : -1,
+      });
 
     let finalResponse = {
       data: tasks,
