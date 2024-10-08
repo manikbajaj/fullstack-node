@@ -36,6 +36,7 @@ const taskSchema = new Schema(
       type: Date,
       required: [true, "Due date is required"],
     },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true }
 );

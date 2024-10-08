@@ -7,5 +7,5 @@ Content-Type: application/json
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis diam vel malesuada ultricies.",
   "priority": "normal",
   "status": "todo", 
-  "extraField": true
+  "user": "6702323a852ffb859ddcd035"
 }

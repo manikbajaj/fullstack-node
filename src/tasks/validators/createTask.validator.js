@@ -31,6 +31,9 @@ createTaskValidator = [
     "priority",
     "The priority must be one of ['low', 'normal', 'high']"
   ).isIn(["low", "normal", "high"]),
+  body("user", "Id  of the user creating the task, required ")
+    .notEmpty()
+    .isMongoId(),
 ];
 
 module.exports = createTaskValidator;
