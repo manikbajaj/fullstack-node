@@ -54,8 +54,6 @@ async function getTasksProvider(req, res) {
   return res.status(StatusCodes.OK).json(finalResponse);
 
   try {
-    // Insert the article in  MongoDB database
-    const tasks = await Task.find();
     return res.status(StatusCodes.OK).json(tasks);
   } catch (error) {
     errorLogger("Error while fetching task: ", req, error);
