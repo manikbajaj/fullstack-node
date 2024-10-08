@@ -14,9 +14,19 @@ function responseFormatter(req, res, next) {
       status: statusCode >= 200 && statusCode < 300 ? "success" : "error",
       statusCode: statusCode,
       message: getReasonPhrase(res.statusCode),
-      data: statusCode >= 200 && statusCode < 300 ? data : null,
-      error: statusCode >= 200 && statusCode < 300 ? null : data,
     };
+
+    if (statusCode >= 200 && statusCode < 300) {
+      response.data = data.pagination ? data.data : data;
+    }
+
+    if (statusCode >= 300) {
+      response.error = data;
+    }
+
+    if (data.pagination) {
+      response.pagination = data.pagination;
+    }
 
     // Call the original response with a new object
     originalJson.call(res, response);
