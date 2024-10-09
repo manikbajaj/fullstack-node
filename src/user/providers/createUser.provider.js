@@ -7,6 +7,15 @@ const errorLogger = require("../../helpers/errorLogger.helper.js");
 async function createUserProvider(req, res) {
   const validatedData = matchedData(req);
 
+  //  Check if there is an existing user
+  const existingUser = await User.findOne({ email: validatedData.email });
+
+  if (existingUser) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: "A user this email alreadye exists" });
+  }
+
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(validatedData.password, salt);
 
