@@ -3,6 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const bcrypt = require("bcrypt");
 const getUserByEmail = require("../../user/providers/getUserByEmail.provider.js");
 const errorLogger = require("../../helpers/errorLogger.helper.js");
+const generateTokenProvider = require("./generateToken.provider.js");
 
 async function loginProvider(req, res) {
   const validatedData = matchedData(req);
@@ -20,8 +21,10 @@ async function loginProvider(req, res) {
         .json({ message: "Please check your credentials." });
     }
 
-    // ! Just sending this at the moment we will send JWT instead
-    return res.status(StatusCodes.OK).json({ login: true });
+    // Generate Access token
+    const token = generateTokenProvider(user);
+
+    return res.status(StatusCodes.OK).json({ accessToken: token });
   } catch (error) {
     errorLogger("Error while trying to login: ", req, error);
     return res.status(StatusCodes.GATEWAY_TIMEOUT).json({
