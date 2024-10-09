@@ -1,4 +1,5 @@
 const express = require("express");
+const { StatusCodes } = require("http-status-codes");
 const { validationResult } = require("express-validator");
 const authController = require("./auth.controller.js");
 const loginValidator = require("./validators/login.validator.js");
