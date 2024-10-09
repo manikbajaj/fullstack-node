@@ -7,6 +7,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzA2M2UxN
   "dueDate": "2025-01-01T12:00:00Z",
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis diam vel malesuada ultricies.",
   "priority": "normal",
-  "status": "todo", 
-  "user": "6702323a852ffb859ddcd035"
+  "status": "todo"
 }
