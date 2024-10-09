@@ -12,14 +12,18 @@ const authenticateToken = require("../middleware/authenticateToken.middleware.js
 const tasksRouter = express.Router();
 
 // Get All Tasks
-tasksRouter.get("/tasks", getTasksValidator, (req, res) => {
-  const result = validationResult(req);
-  if (result.isEmpty()) {
-    return tasksController.handleGetTasks(req, res);
-  } else {
-    res.status(StatusCodes.BAD_REQUEST).json(result.array());
+tasksRouter.get(
+  "/tasks",
+  [getTasksValidator, authenticateToken],
+  (req, res) => {
+    const result = validationResult(req);
+    if (result.isEmpty()) {
+      return tasksController.handleGetTasks(req, res);
+    } else {
+      res.status(StatusCodes.BAD_REQUEST).json(result.array());
+    }
   }
-});
+);
 
 // POST Create a task
 tasksRouter.post(
@@ -36,24 +40,32 @@ tasksRouter.post(
 );
 
 // Get All Tasks
-tasksRouter.patch("/tasks", updateTaskValidator, (req, res) => {
-  const result = validationResult(req);
-  if (result.isEmpty()) {
-    return tasksController.handlePatchTasks(req, res);
-  } else {
-    res.status(StatusCodes.BAD_REQUEST).json(result.array());
+tasksRouter.patch(
+  "/tasks",
+  [updateTaskValidator, authenticateToken],
+  (req, res) => {
+    const result = validationResult(req);
+    if (result.isEmpty()) {
+      return tasksController.handlePatchTasks(req, res);
+    } else {
+      res.status(StatusCodes.BAD_REQUEST).json(result.array());
+    }
   }
-});
+);
 
 // POST Create a task
-tasksRouter.delete("/tasks", deleteTaskValidator, (req, res) => {
-  const result = validationResult(req);
-  if (result.isEmpty()) {
-    return tasksController.handleDeleteTasks(req, res);
-  } else {
-    res.status(StatusCodes.BAD_REQUEST).json(result.array());
+tasksRouter.delete(
+  "/tasks",
+  [deleteTaskValidator, authenticateToken],
+  (req, res) => {
+    const result = validationResult(req);
+    if (result.isEmpty()) {
+      return tasksController.handleDeleteTasks(req, res);
+    } else {
+      res.status(StatusCodes.BAD_REQUEST).json(result.array());
+    }
   }
-});
+);
 
 // export the task router
 module.exports = tasksRouter;
