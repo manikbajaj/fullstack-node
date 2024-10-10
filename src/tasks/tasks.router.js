@@ -47,7 +47,7 @@ tasksRouter.get(
  *           schema:
  *             $ref: '#/components/schemas/Task'
  *     responses:
- *       200:
+ *       201:
  *         description: Shape of task response
  *         content:
  *           application/json:
