@@ -82,8 +82,6 @@ tasksRouter.get(
   }
 );
 
-// ! USIng ref refers the the correct schema and example of the schema is picked up as the default request as well
-
 /**
  * @swagger
  * components:
@@ -126,7 +124,6 @@ tasksRouter.get(
  *               error:
  *                 message: "Your token is either expired or invalid."
  */
-
 tasksRouter.post(
   "/tasks",
   [createTaskValidator, authenticateToken],

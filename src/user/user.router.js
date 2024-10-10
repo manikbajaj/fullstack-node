@@ -6,6 +6,28 @@ const createUserValidator = require("./validators/createUser.validator.js");
 
 const userRouter = express.Router();
 
+/**
+ * @swagger
+ * /user/create:
+ *   post:
+ *     summary: Create a new user
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       201:
+ *         description: Shape of task response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ */
 userRouter.post("/create", createUserValidator, (req, res) => {
   const result = validationResult(req);
   if (result.isEmpty()) {
