@@ -11,7 +11,6 @@ const authenticateToken = require("../middleware/authenticateToken.middleware.js
 /*Fire the router function*/
 const tasksRouter = express.Router();
 
-// Get All Tasks
 tasksRouter.get(
   "/tasks",
   [getTasksValidator, authenticateToken],
@@ -25,7 +24,51 @@ tasksRouter.get(
   }
 );
 
-// POST Create a task
+// ! USIng ref refers the the correct schema and example of the schema is picked up as the default request as well
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ * /tasks:
+ *   post:
+ *     summary: Create a new Task
+ *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Task'
+ *     responses:
+ *       200:
+ *         description: Shape of task response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       401:
+ *         description: Not Authorized error
+ *         content:
+ *           application/json:
+ *             example:
+ *               error:
+ *                 message: "You are not Authorized to perform this request"
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             example:
+ *               error:
+ *                 message: "Your token is either expired or invalid."
+ */
+
 tasksRouter.post(
   "/tasks",
   [createTaskValidator, authenticateToken],
