@@ -11,6 +11,64 @@ const authenticateToken = require("../middleware/authenticateToken.middleware.js
 /*Fire the router function*/
 const tasksRouter = express.Router();
 
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ * /tasks:
+ *   get:
+ *     summary: Get all tasks
+ *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: The number of tasks needed in a single response.
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: The page number of the tasks response.
+ *       - in: query
+ *         name: order
+ *         schema:
+ *           type: string
+ *           default: 'asc'
+ *           enum: [asc, desc]
+ *         description: Order of tasks ('asc' or 'desc').
+ *     responses:
+ *       200:
+ *         description: A list of tasks
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Task'
+ *       401:
+ *         description: Not Authorized error
+ *         content:
+ *           application/json:
+ *             example:
+ *               error:
+ *                 message: "You are not Authorized to perform this request"
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             example:
+ *               error:
+ *                 message: "Your token is either expired or invalid."
+ */
 tasksRouter.get(
   "/tasks",
   [getTasksValidator, authenticateToken],
@@ -47,7 +105,7 @@ tasksRouter.get(
  *           schema:
  *             $ref: '#/components/schemas/Task'
  *     responses:
- *       200:
+ *       201:
  *         description: Shape of task response
  *         content:
  *           application/json:
