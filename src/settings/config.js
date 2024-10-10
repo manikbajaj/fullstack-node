@@ -8,6 +8,8 @@ const authRouter = require("../auth/auth.router.js");
 const userRouter = require("../user/user.router.js");
 const { StatusCodes } = require("http-status-codes");
 const expressWinstonLogger = require("../middleware/expressWinston.middleware.js");
+swaggerUi = require("swagger-ui-express");
+const swaggerSpecs = require("./swagger.config.js");
 
 function configureApp(app) {
   // Use CORS
@@ -35,6 +37,9 @@ function configureApp(app) {
   app.use("/", tasksRouter);
   app.use("/auth", authRouter);
   app.use("/user", userRouter);
+
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+  console.log(swaggerSpecs);
 
   // send back a 404 error for any unknown api request
   // Sequence is important
