@@ -24,7 +24,12 @@ async function loginProvider(req, res) {
     // Generate Access token
     const token = generateTokenProvider(user);
 
-    return res.status(StatusCodes.OK).json({ accessToken: token });
+    return res.status(StatusCodes.OK).json({
+      accessToken: token,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+    });
   } catch (error) {
     errorLogger("Error while trying to login: ", req, error);
     return res.status(StatusCodes.GATEWAY_TIMEOUT).json({
