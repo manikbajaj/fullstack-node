@@ -12,6 +12,11 @@ async function getTasksProvider(req, res) {
     // Pagination required properties
     // Count of all documents
     const totalTasks = await Task.countDocuments();
+
+    const completedTasks = await Task.countDocuments({ status: "completed" });
+    const todoTasks = await Task.countDocuments({ status: "todo" });
+    const inProgressTasks = await Task.countDocuments({ status: "inProgress" });
+
     // Base URL
     const baseUrl = `${req.protocol}://${req.get("host")}${
       req.originalUrl.split("?")[0]
@@ -31,7 +36,9 @@ async function getTasksProvider(req, res) {
     const previousPage = currentPage === 1 ? currentPage : currentPage - 1;
 
     // Fetch Data
-    const tasks = await Task.find()
+    const tasks = await Task.find({
+      status: { $in: ["todo", "inProgress"] }, // Filter condition added here
+    })
       .limit(limit)
       .skip(currentPage - 1)
       .sort({
@@ -46,6 +53,9 @@ async function getTasksProvider(req, res) {
           totalItems: totalTasks,
           currentPage: currentPage,
           totalPages: totalPages,
+          completedTasks,
+          todoTasks,
+          inProgressTasks,
         },
         links: {
           first: `${baseUrl}/?limit=${limit}&page=${1}&order=${order}`,
