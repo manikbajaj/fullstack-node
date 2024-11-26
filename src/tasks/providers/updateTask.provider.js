@@ -7,7 +7,7 @@ async function updateTaskProvider(req, res) {
    * promises
    * .
    */
-  const task = await Task.findById(req.body["_id"]).exec();
+  const task = await Task.findById(req.body["_id"]);
 
   //  Update the task
   task.title = req.body.title;
