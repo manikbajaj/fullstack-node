@@ -7,7 +7,7 @@ async function updateTaskProvider(req, res) {
   const validatedData = matchedData(req);
 
   try {
-    const task = await Task.findById(req.body["_id"]).exec();
+    const task = await Task.findById(req.body["_id"]);
 
     //  Update the task
     task.title = validatedData.title || task.title;
