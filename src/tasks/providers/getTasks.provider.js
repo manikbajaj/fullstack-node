@@ -9,29 +9,21 @@ async function getTasksProvider(req, res) {
   console.log(data.order === "asc" ? 1 : -1);
 
   try {
-    // Pagination required properties
-    // Count of all documents
     const totalTasks = await Task.countDocuments();
-    // Base URL
+    const currentPage = data.page;
+    const limit = data.limit;
+    const order = data.order;
+    const totalPages = Math.ceil(totalTasks / limit);
+    const nextPage = currentPage === totalPages ? currentPage : currentPage + 1;
+    const previousPage = currentPage === 1 ? currentPage : currentPage - 1;
     const baseUrl = `${req.protocol}://${req.get("host")}${
       req.originalUrl.split("?")[0]
     }`;
 
-    // currentPage
-    const currentPage = data.page;
-    // limit
-    const limit = data.limit;
-    // sorting order
-    const order = data.order;
-    // Total pages
-    const totalPages = Math.ceil(totalTasks / limit);
-    // Next Page
-    const nextPage = currentPage === totalPages ? currentPage : currentPage + 1;
-    // Previous Page
-    const previousPage = currentPage === 1 ? currentPage : currentPage - 1;
-
     // Fetch Data
-    const tasks = await Task.find()
+    const tasks = await Task.find({
+      status: { $in: ["todo", "inProgress"] },
+    })
       .limit(limit)
       .skip(currentPage - 1)
       .sort({
