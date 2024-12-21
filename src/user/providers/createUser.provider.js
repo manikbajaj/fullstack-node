@@ -19,8 +19,6 @@ async function createUserProvider(req, res) {
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(validatedData.password, salt);
 
-  console.log(hashedPassword);
-
   try {
     const user = new User({
       firstName: validatedData.firstName,

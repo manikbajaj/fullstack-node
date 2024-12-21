@@ -6,8 +6,6 @@ const errorLogger = require("../../helpers/errorLogger.helper.js");
 async function getTasksProvider(req, res) {
   const data = matchedData(req);
 
-  console.log(data.order === "asc" ? 1 : -1);
-
   try {
     // Pagination required properties
     // Count of all documents

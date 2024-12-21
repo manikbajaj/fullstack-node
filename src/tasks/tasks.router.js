@@ -10,64 +10,79 @@ const authenticateToken = require("../middleware/authenticateToken.middleware.js
 
 /*Fire the router function*/
 const tasksRouter = express.Router();
-
 /**
  * @swagger
+ *
  * components:
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *  securitySchemes:
+ *    bearerAuth:
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
  * /tasks:
- *   get:
- *     summary: Get all tasks
- *     tags: [Tasks]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *           default: 10
- *         description: The number of tasks needed in a single response.
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *           default: 1
- *         description: The page number of the tasks response.
- *       - in: query
- *         name: order
- *         schema:
- *           type: string
- *           default: 'asc'
- *           enum: [asc, desc]
- *         description: Order of tasks ('asc' or 'desc').
- *     responses:
- *       200:
- *         description: A list of tasks
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Task'
- *       401:
- *         description: Not Authorized error
- *         content:
- *           application/json:
- *             example:
- *               error:
- *                 message: "You are not Authorized to perform this request"
- *       403:
- *         description: Forbidden
- *         content:
- *           application/json:
- *             example:
- *               error:
- *                 message: "Your token is either expired or invalid."
+ *  get:
+ *    summary: Get all tasks
+ *    tags: [Tasks]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: query
+ *        name: limit
+ *        schema:
+ *          type: integer
+ *          default: 10
+ *        description: The number of tasks needed in a single response
+ *      - in: query
+ *        name: page
+ *        schema:
+ *          type: integer
+ *          default: 1
+ *        description: The page number of the tasks response
+ *      - in: query
+ *        name: order
+ *        schema:
+ *          type: string
+ *          default: 'asc'
+ *          enum: ['asc', 'dsc']
+ *        description: Order of tasks
+ *
+ *    responses:
+ *      200:
+ *        description: Task created successfully
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: success
+ *              statusCode: 200
+ *              message: Ok
+ *              data:
+ *                - _id: 673de6c779952edf27e811fa
+ *                  title: Create a new video
+ *                  description: A video about fullstack web development
+ *                  status: todo
+ *                  priority: normal
+ *                  dueDate: 2025-01-01T12:00:00Z
+ *
+ *      401:
+ *        description: Not Authorized Error
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: error
+ *              statusCode: 401
+ *              message: Unauthorized
+ *              error:
+ *                message: You are not authorised to perform this request
+ *      403:
+ *        description: Forbidden Error
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: error
+ *              statusCode: 403
+ *              message: Forbidden
+ *              error:
+ *                message: Please login again, invalid token.
  */
 tasksRouter.get(
   "/tasks",
@@ -84,45 +99,62 @@ tasksRouter.get(
 
 /**
  * @swagger
+ *
  * components:
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *  securitySchemes:
+ *    bearerAuth:
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
  * /tasks:
- *   post:
- *     summary: Create a new Task
- *     tags: [Tasks]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Task'
- *     responses:
- *       201:
- *         description: Shape of task response
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Task'
- *       401:
- *         description: Not Authorized error
- *         content:
- *           application/json:
- *             example:
- *               error:
- *                 message: "You are not Authorized to perform this request"
- *       403:
- *         description: Forbidden
- *         content:
- *           application/json:
- *             example:
- *               error:
- *                 message: "Your token is either expired or invalid."
+ *  post:
+ *    summary: Create a new task
+ *    tags: [Tasks]
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Task'
+ *    responses:
+ *      201:
+ *        description: Task created successfully
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: success
+ *              statusCode: 201
+ *              message: Created
+ *              data:
+ *                _id: 673de6c779952edf27e811fa
+ *                title: Create a new video
+ *                description: A video about fullstack web development
+ *                status: todo
+ *                priority: normal
+ *                dueDate: 2025-01-01T12:00:00Z
+ *
+ *      401:
+ *        description: Not Authorized Error
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: error
+ *              statusCode: 401
+ *              message: Unauthorized
+ *              error:
+ *                message: You are not authorised to perform this request
+ *      403:
+ *        description: Forbidden Error
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: error
+ *              statusCode: 403
+ *              message: Forbidden
+ *              error:
+ *                message: Please login again, invalid token.
  */
 tasksRouter.post(
   "/tasks",
@@ -139,45 +171,62 @@ tasksRouter.post(
 
 /**
  * @swagger
+ *
  * components:
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *  securitySchemes:
+ *    bearerAuth:
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
  * /tasks:
- *   patch:
- *     summary: Update a task
- *     tags: [Tasks]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/TaskUpdate'
- *     responses:
- *       200:
- *         description: Shape of task response
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/TaskUpdate'
- *       401:
- *         description: Not Authorized error
- *         content:
- *           application/json:
- *             example:
- *               error:
- *                 message: "You are not Authorized to perform this request"
- *       403:
- *         description: Forbidden
- *         content:
- *           application/json:
- *             example:
- *               error:
- *                 message: "Your token is either expired or invalid."
+ *  patch:
+ *    summary: Update a task
+ *    tags: [Tasks]
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/TaskUpdate'
+ *    responses:
+ *      200:
+ *        description: Task updated successfully
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: success
+ *              statusCode: 200
+ *              message: Ok
+ *              data:
+ *                _id: 673de6c779952edf27e811fa
+ *                title: Create a new video
+ *                description: A video about fullstack web development
+ *                status: todo
+ *                priority: normal
+ *                dueDate: 2025-01-01T12:00:00Z
+ *
+ *      401:
+ *        description: Not Authorized Error
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: error
+ *              statusCode: 401
+ *              message: Unauthorized
+ *              error:
+ *                message: You are not authorised to perform this request
+ *      403:
+ *        description: Forbidden Error
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: error
+ *              statusCode: 403
+ *              message: Forbidden
+ *              error:
+ *                message: Please login again, invalid token.
  */
 tasksRouter.patch(
   "/tasks",
@@ -194,45 +243,58 @@ tasksRouter.patch(
 
 /**
  * @swagger
+ *
  * components:
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *  securitySchemes:
+ *    bearerAuth:
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
  * /tasks:
- *   delete:
- *     summary: Delete a task
- *     tags: [Tasks]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/TaskDelete'
- *     responses:
- *       200:
- *         description: Shape of task response
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/TaskDelete'
- *       401:
- *         description: Not Authorized error
- *         content:
- *           application/json:
- *             example:
- *               error:
- *                 message: "You are not Authorized to perform this request"
- *       403:
- *         description: Forbidden
- *         content:
- *           application/json:
- *             example:
- *               error:
- *                 message: "Your token is either expired or invalid."
+ *  delete:
+ *    summary: Delete a task
+ *    tags: [Tasks]
+ *    security:
+ *      - bearerAuth: []
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/TaskDelete'
+ *    responses:
+ *      200:
+ *        description: Task deleted successfully
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: success
+ *              statusCode: 200
+ *              message: Ok
+ *              data:
+ *                acknowledged: true
+ *                deletedCount: 1
+ *
+ *      401:
+ *        description: Not Authorized Error
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: error
+ *              statusCode: 401
+ *              message: Unauthorized
+ *              error:
+ *                message: You are not authorised to perform this request
+ *      403:
+ *        description: Forbidden Error
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: error
+ *              statusCode: 403
+ *              message: Forbidden
+ *              error:
+ *                message: Please login again, invalid token.
  */
 tasksRouter.delete(
   "/tasks",

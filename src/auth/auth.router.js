@@ -8,27 +8,29 @@ const authRouter = express.Router();
 
 /**
  * @swagger
+ *
  * /auth/login:
- *   post:
- *     summary: User Login
- *     tags: [Authentication]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Login'
- *     responses:
- *       201:
- *         description: Shape of task response
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Login'
+ *  post:
+ *    summary: User login
+ *    tags: [Authentication]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Login'
+ *    responses:
+ *      200:
+ *        description: User Login successful
+ *        content:
+ *          application/json:
+ *            example:
+ *              status: success
+ *              statusCode: 200
+ *              message: Ok
+ *              data:
+ *                accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzQ4NWFjYTMzMzY1MDAzZGRlYTcwODEiLCJlbWFpbCI6ImpvaG5AZG9lLmNvbSIsImlhdCI6MTczMzEyODI1MCwiZXhwIjoxNzMzMjE0NjUwfQ.xv9Qypl4Etgk5t8MxBHfF7_3f9871RtlWQm_pxqsl1g
  */
-
 authRouter.post("/login", loginValidator, (req, res) => {
   const result = validationResult(req);
   if (result.isEmpty()) {
@@ -42,21 +44,22 @@ module.exports = authRouter;
 
 /**
  * @swagger
+ *
  * components:
- *   schemas:
- *     Login:
- *       type: object
- *       required:
- *         - email
- *         - password
- *       properties:
- *         email:
- *           type: string
- *           description: A valid email address
- *         password:
- *           type: string
- *           description: Must be atleast 8 chars and contain a number, Capital letter and a special character
- *       example:
- *         email: john@doe.com
- *         password: Password123#
- */
+ *  schemas:
+ *   Login:
+ *    type: object
+ *    required:
+ *      - email
+ *      - password
+ *    properties:
+ *      email:
+ *        type: string
+ *        description: A valid email address
+ *      password:
+ *        type: string
+ *        description: Must contain 8 characters and also a number, a capital letter and a special character
+ *    example:
+ *      email: john@doe.com
+ *      password: Password123#
+ *  */
