@@ -3,20 +3,20 @@ const jwt = require("jsonwebtoken");
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  // Extract Bearer <token>
+  const token = authHeader && authHeader.split(" ")[1]; // Bearer <token>
 
-  if (!token) {
+  if (token == null)
     return res
       .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: "You are not authorised to perform this request" });
-  }
+      .json({ message: "You are not Authorized to perform this request" }); // No token present
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(StatusCodes.FORBIDDEN).json({
-        message: "Please login again, invalid token.",
-      });
-    }
+    if (err)
+      return res
+        .status(StatusCodes.FORBIDDEN)
+        .json({ message: "Your token is either expired or invalid." });
+
     req.user = user;
     next();
   });

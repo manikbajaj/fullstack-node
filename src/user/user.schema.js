@@ -5,30 +5,30 @@ const userSchema = new Schema({
     type: String,
     required: [true, "firstName is required"],
     trim: true,
-    maxLength: [100, "firstName cannot be more than 100 chars"],
+    maxlength: [100, "firstName cannot be more than 100 characters"],
   },
   lastName: {
     type: String,
     required: false,
     trim: true,
-    maxLength: [100, "lastName cannot be more than 100 chars"],
+    maxlength: [100, "lastName cannot be more than 100 characters"],
   },
   email: {
     type: String,
     required: [true, "Email is required"],
+    unique: true, // Ensure no two users have the same email
     trim: true,
-    unique: true,
-    lowercase: true,
+    lowercase: true, // Convert email to lowercase before saving to database
     validate: {
       validator: function (email) {
-        return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+        return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
       },
-      message: () => `Please enter a valid email address`,
+      message: (props) => `${props.value} is not a valid email address!`,
     },
   },
   password: {
     type: String,
-    required: [true, "password is required"],
+    required: [true, "Password is required"],
   },
 });
 

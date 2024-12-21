@@ -1,10 +1,10 @@
 const express = require("express");
-const usersController = require("./users.controller.js");
-const createUserValidator = require("./validators/createUser.validator.js");
 const { StatusCodes } = require("http-status-codes");
 const { validationResult } = require("express-validator");
+const userController = require("./user.controller.js");
+const createUserValidator = require("./validators/createUser.validator.js");
 
-const usersRouter = express.Router();
+const userRouter = express.Router();
 
 /**
  * @swagger
@@ -34,14 +34,13 @@ const usersRouter = express.Router();
  *                lastName: Doe
  *                email: john@doe.com
  */
-usersRouter.post("/create", createUserValidator, (req, res) => {
+userRouter.post("/create", createUserValidator, (req, res) => {
   const result = validationResult(req);
-
   if (result.isEmpty()) {
-    return usersController.handleCreateUser(req, res);
+    return userController.handleCreateUser(req, res);
   } else {
     res.status(StatusCodes.BAD_REQUEST).json(result.array());
   }
 });
 
-module.exports = usersRouter;
+module.exports = userRouter;

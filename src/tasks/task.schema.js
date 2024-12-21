@@ -6,13 +6,13 @@ const taskSchema = new Schema(
       type: String,
       required: [true, "Task title is required"],
       trim: true,
-      maxLength: [100, "Title cannot be more than 100 characters"],
+      maxlength: [100, "Title cannot be more than 100 characters"],
     },
     description: {
       type: String,
       required: [true, "Task description is required"],
       trim: true,
-      maxLength: [500, "Description cannot be more than 500 characters"],
+      maxlength: [500, "Description cannot be more than 500 characters"],
     },
     status: {
       type: String,
@@ -26,18 +26,23 @@ const taskSchema = new Schema(
       enum: ["low", "normal", "high"],
       default: "normal",
     },
+    // Removing createdAt and adding a timestamp instead of that
+    // createdAt: {
+    //   type: Date,
+    //   default: Date.now,
+    // },
     dueDate: {
       type: Date,
-      required: [true, "Task due date is required"],
+      required: [true, "Due date is required"],
     },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
-  { timestamps: true, versionKey: false }
+  { timestamps: true }
 );
 
+// Create the model and export it
 const Task = model("Task", taskSchema);
 module.exports = Task;
-
 /**
  * @swagger
  *

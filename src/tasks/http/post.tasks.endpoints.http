@@ -1,0 +1,11 @@
+POST http://localhost:3001/tasks
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzA2M2UxNWM5ZTMzOTljYjMzYzM3MjMiLCJlbWFpbCI6ImpvaG5AZG9lLmNvbSIsImlhdCI6MTcyODQ3NTI0OSwiZXhwIjoxNzI4NTYxNjQ5fQ.zkcb2vm_rULmNiNsxzdVIgImu2tWx_yu3AgGL7rAd6U
+
+{
+  "title": "Title Of the Task",
+  "dueDate": "2025-01-01T12:00:00Z",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis diam vel malesuada ultricies.",
+  "priority": "normal",
+  "status": "todo"
+}

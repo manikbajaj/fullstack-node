@@ -1,17 +1,24 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const configureApp = require("./settings/config.js");
+const mongoose = require("mongoose");
 
+// Set the default environment
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
+
+// Load Environment variables from different files based on environment
 const envFile = `.env.${process.env.NODE_ENV}`;
 
+// configure dotenv earlier in application
 dotenv.config({ path: envFile });
-const app = express();
-const port = parseInt(process.env.PORT);
 
+const app = express();
+const port = process.env.PORT;
+
+//  Parsing request body
 app.use(express.json());
 
+// Configure app
 configureApp(app);
 
 async function bootstrap() {
@@ -19,12 +26,12 @@ async function bootstrap() {
     await mongoose.connect(process.env.DATABASE_URL, {
       dbName: process.env.DATABASE_NAME,
     });
-    console.log("Connected To MongoDB");
+    console.log("Connnected To MongoDB");
     app.listen(port, () => {
       console.log(`App listening on port ${port}`);
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     process.exit(1);
   }
 }

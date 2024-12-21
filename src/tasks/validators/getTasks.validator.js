@@ -1,21 +1,18 @@
 const { query } = require("express-validator");
 
 const getTasksValidator = [
-  query("limit", "limit must be a valid int")
-    .optional()
-    .isInt()
-    .toInt({ min: 1 }),
+  query("limit", "limit must be a valid integer").optional().isInt().toInt(),
   query("limit").customSanitizer((value, { req }) => {
-    return value ? value : 5;
+    return value ? value : 10;
   }),
-  query("page", "page must be a valid int")
+  query("page", "page must be a valid integer and greater than or equal to 1")
     .optional()
-    .isInt()
-    .toInt({ min: 1 }),
+    .isInt({ min: 1 })
+    .toInt(),
   query("page").customSanitizer((value, { req }) => {
     return value ? value : 1;
   }),
-  query("order", "oder must be one of ['asc', 'dsc']")
+  query("order", "order must be one of ['asc', 'dsc']")
     .optional()
     .isIn(["asc", "dsc"]),
   query("order").customSanitizer((value, { req }) => {

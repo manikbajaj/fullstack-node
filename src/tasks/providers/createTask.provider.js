@@ -4,15 +4,15 @@ const { StatusCodes } = require("http-status-codes");
 const errorLogger = require("../../helpers/errorLogger.helper.js");
 
 async function createTaskProvider(req, res) {
-  const validatedResult = matchedData(req);
-  const task = new Task({ ...validatedResult, user: req.user.sub });
+  const validatedData = matchedData(req);
 
+  const task = new Task({ ...validatedData, user: req.user.sub });
   try {
+    // Insert the article in  MongoDB database
     await task.save();
     return res.status(StatusCodes.CREATED).json(task);
   } catch (error) {
-    errorLogger(`Error creating a new task: ${error.message}`, req, error);
-
+    errorLogger("Error while creating task: ", req, error);
     return res.status(StatusCodes.GATEWAY_TIMEOUT).json({
       reason: "Unable to process your request at the moment, please try later.",
     });

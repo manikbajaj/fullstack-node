@@ -1,12 +1,13 @@
-const swaggerJsdoc = require("swagger-jsdoc");
+swaggerJsdoc = require("swagger-jsdoc");
 const path = require("path");
 
 const options = {
   definition: {
     openapi: "3.1.0",
     info: {
-      title: "Task Manager API",
+      title: "Cloudaffle Task Manager API",
       version: "0.1.0",
+      //! SEE that adding description and contact has a direct impact on documentation website
       description:
         "API application made with Express and documented with Swagger",
       license: {
